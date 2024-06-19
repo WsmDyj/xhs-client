@@ -1,9 +1,9 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigKeyPaths } from '~/config';
 import { IAppConfig } from '~/config/app.config';
-import { ResOp } from '../model/response.model';
+import { ResOp } from './model/response.model';
 
 export function setupSwagger(
   app: INestApplication,

@@ -1,10 +1,20 @@
+import cluster from 'node:cluster';
+export const isDev = process.env.NODE_ENV === 'development';
 /**
- * 基础类型接口
+ * @description 节点应用程序实例
+ */
+export const isMainCluster =
+  process.env.NODE_APP_INSTANCE &&
+  Number.parseInt(process.env.NODE_APP_INSTANCE) === 0;
+export const isMainProcess = cluster.isPrimary || isMainCluster;
+
+/**
+ * @description 基础类型接口
  */
 export type BaseType = boolean | number | string | undefined | null;
 
 /**
- * 格式化环境变量
+ * @description 格式化环境变量
  * @param key 环境变量的键值
  * @param defaultValue 默认值
  * @param callback 格式化函数
@@ -24,4 +34,18 @@ function formatValue<T extends BaseType = string>(
 
 export function env(key: string, defaultValue: string = '') {
   return formatValue(key, defaultValue);
+}
+
+export function envString(key: string, defaultValue: string = '') {
+  return formatValue(key, defaultValue);
+}
+
+export function envNumber(key: string, defaultValue: number = 0) {
+  return formatValue(key, defaultValue, (value) => {
+    try {
+      return Number(value);
+    } catch {
+      throw new Error(`${key} environment variable is not a number`);
+    }
+  });
 }
