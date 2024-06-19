@@ -76,7 +76,6 @@ export function ApiResult<TModel extends Type<any>>({
         // const isPost =
         //   Reflect.getMetadata(METHOD_METADATA, descriptor.value) ===
         //   RequestMethod.POST;
-
         ApiResponse({
           status: status ?? HttpStatus.OK,
           schema: {

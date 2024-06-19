@@ -9,7 +9,7 @@ import { SharedModule } from './common/shared/shared.modules';
 import { CatsModule } from './modules/cats/cats.module';
 import { MiddlewareModule } from './middleware/middleware.module';
 import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
-
+import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -38,7 +38,11 @@ import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
       provide: APP_INTERCEPTOR,
       useClass: TransformInterceptor,
     },
-
+    {
+      // 接口超时
+      provide: APP_INTERCEPTOR,
+      useFactory: () => new TimeoutInterceptor(5 * 1000),
+    },
     { provide: APP_GUARD, useClass: ThrottlerGuard }, // 限流
   ],
 })

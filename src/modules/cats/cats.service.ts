@@ -16,7 +16,7 @@ export class CatsService {
     this.cats.push(cat);
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     const cats = this.cats.filter((it) => it.id === id);
     return cats;
   }
