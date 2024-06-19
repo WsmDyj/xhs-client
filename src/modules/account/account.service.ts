@@ -1,5 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { BusinessException } from '~/common/exceptions/biz.exception';
+import { ErrorEnum } from '~/common/constants/error-code.constant';
+import {
+  RESPONSE_SUCCESS_CODE,
+  RESPONSE_SUCCESS_MSG,
+} from '~/common/constants/response.constant';
 
 @Injectable()
 export class AccountService {
@@ -21,9 +27,9 @@ export class AccountService {
       password,
       service: 'https://pro.xiaohongshu.com',
     });
-    if (data.statusCode === 200) {
-      return data.data;
+    if (data.statusCode !== RESPONSE_SUCCESS_CODE) {
+      throw new BusinessException(ErrorEnum.XHS_LOGIN_ERROR, data?.errorMsg);
     }
-    return '';
+    return data.data;
   }
 }

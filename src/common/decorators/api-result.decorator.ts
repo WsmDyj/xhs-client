@@ -73,12 +73,12 @@ export function ApiResult<TModel extends Type<any>>({
       descriptor: TypedPropertyDescriptor<any>,
     ) => {
       queueMicrotask(() => {
-        const isPost =
-          Reflect.getMetadata(METHOD_METADATA, descriptor.value) ===
-          RequestMethod.POST;
+        // const isPost =
+        //   Reflect.getMetadata(METHOD_METADATA, descriptor.value) ===
+        //   RequestMethod.POST;
 
         ApiResponse({
-          status: status ?? (isPost ? HttpStatus.CREATED : HttpStatus.OK),
+          status: status ?? HttpStatus.OK,
           schema: {
             allOf: [
               { $ref: getSchemaPath(ResOp) },

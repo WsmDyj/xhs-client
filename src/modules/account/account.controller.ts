@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { LoginDto, LoginToken } from './dao/auth.dao';
+import { LoginDto, LoginToken } from './dao/account';
 import { ApiResult } from 'src/common/decorators/api-result.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
