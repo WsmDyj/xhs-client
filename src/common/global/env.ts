@@ -49,3 +49,13 @@ export function envNumber(key: string, defaultValue: number = 0) {
     }
   });
 }
+
+export function envBoolean(key: string, defaultValue: boolean = false) {
+  return formatValue(key, defaultValue, (value) => {
+    try {
+      return Boolean(JSON.parse(value));
+    } catch {
+      throw new Error(`${key} environment variable is not a boolean`);
+    }
+  });
+}
