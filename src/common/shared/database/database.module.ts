@@ -13,7 +13,6 @@ import { env } from '~/common/global/env';
       inject: [ConfigService],
       useFactory: (configService: ConfigService<ConfigKeyPaths>) => {
         const loggerOptions: LoggerOptions = env('DB_LOGGING') as 'all';
-        console.log('--->loggerOptions', JSON.parse(loggerOptions));
         return {
           ...configService.get<IDatabaseConfig>(dbRegToken),
           autoLoadEntities: true,

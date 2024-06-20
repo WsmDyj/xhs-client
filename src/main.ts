@@ -27,7 +27,6 @@ async function bootstrap() {
       snapshot: true, // 系统备份
     },
   );
-
   const configService = app.get(ConfigService<ConfigKeyPaths>);
 
   const { port, globalPrefix } = configService.get('app');
@@ -35,7 +34,6 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix); // 设置全局api前缀
 
   // 全局拦截器
-  console.log('isdev', isDev);
   if (isDev) app.useGlobalInterceptors(new LoggingInterceptor());
   // 全局校验管道
   app.useGlobalPipes(

@@ -5,17 +5,20 @@ import config from './config';
 import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
-import { SharedModule } from './common/shared/shared.modules';
+import { SharedModule } from './common/shared/shared.module';
 import { CatsModule } from './modules/cats/cats.module';
 import { MiddlewareModule } from './middleware/middleware.module';
 import { AllExceptionsFilter } from './common/exceptions/all-exception.filter';
 import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
+import { DatabaseModule } from './common/shared/database/database.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      cache: true, // 缓存环境遍历
-      isGlobal: true, // 全局模块
-      expandVariables: true, // 变量替换
+      isGlobal: true,
+      expandVariables: true,
+      // 指定多个 env 文件时，第一个优先级最高
+      envFilePath: ['.env.local', `.env.${process.env.NODE_ENV}`, '.env'],
       load: [...Object.values(config)],
     }),
     // 避免暴力请求，限制同一个接口 10 秒内不能超过 7 次请求
@@ -27,6 +30,7 @@ import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
     }),
     AccountModule,
     SharedModule,
+    DatabaseModule,
     CatsModule,
     MiddlewareModule,
   ],
